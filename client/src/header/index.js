@@ -3,7 +3,6 @@ import { Add } from '@material-ui/icons';
 import { Link, useLocation } from 'react-router-dom';
 
 import SideMenu from './SideMenu';
-import SearchBar from './SearchBar';
 import BackButton from './BackButton';
 
 import { AppContainer, AppSection } from '@root/app/styled_components';
@@ -19,7 +18,6 @@ const Header = () => {
         <AppContainer>
           <NavbarContent>
             <div>
-              <BackButton />
               <SideMenu />
 
               <Link to="/">
@@ -30,17 +28,14 @@ const Header = () => {
             </div>
 
             {!isAddItemPage && (
-              <>
-                <SearchBar />
-                <RightSection>
-                  <Link to="/nowa-oferta">
-                    <StyledAddButton variant="outlined" size="small" color="primary" aria-label="add">
-                      <Add />
-                      Dodaj Ogłoszenie
-                    </StyledAddButton>
-                  </Link>
-                </RightSection>
-              </>
+              <RightSection>
+                <Link to="/nowa-oferta">
+                  <StyledAddButton variant="outlined" size="small" color="primary" aria-label="add">
+                    <Add />
+                    Add todo
+                  </StyledAddButton>
+                </Link>
+              </RightSection>
             )}
           </NavbarContent>
         </AppContainer>

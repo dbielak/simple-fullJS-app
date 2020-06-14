@@ -9,9 +9,6 @@ import AppWrapper from '@root/app_wrapper';
 import 'typeface-roboto';
 
 const Home = lazy(() => import('@root/home'));
-const AddItem = lazy(() => import('@root/add_item'));
-const Policy = lazy(() => import('@root/pages/info_pages/Policy'));
-const Terms = lazy(() => import('@root/pages/info_pages/Terms'));
 const Page404 = lazy(() => import('@root/pages/Page404'));
 const Login = lazy(() => import('@root/pages/Login'));
 
@@ -26,14 +23,9 @@ const App = () => (
         <Switch>
           <Route exact path="/" component={Home} />
 
-          <Route path="/nowa-oferta" component={AddItem} />
-
           <Route path="/login" component={Login} />
 
-          <Route path="/regulamin" component={Policy} />
-          <Route path="/polityka-prywatnosci" component={Terms} />
-
-          <PrivateRoute path="/protected" component={Home} />
+          <PrivateRoute path="/account" component={Home} />
 
           <Route path="*" component={Page404} />
         </Switch>
