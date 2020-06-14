@@ -1,0 +1,27 @@
+type Todo {
+  _id: ID!
+  title: String!
+  description: String
+  dateAdded: String
+}
+
+input TodoInput {
+  title: String!
+  description: String
+}
+
+type PaginatedTodos {
+  todosList: [Todo]
+  total: Float
+  page: Float
+  pages: Float
+}
+
+type Query {
+  todos(filters: String, page: Int, limit: Int, sort: String): PaginatedTodos
+}
+
+type Mutation {
+  addTodo(input: TodoInput): Todo
+  deleteTodo(todoId: Int): Todo
+}

@@ -2,7 +2,6 @@ import express from 'express';
 import path from 'path';
 import fs from 'fs';
 import connectDb from './database/mongo';
-import MobileDetect from 'mobile-detect';
 import Offer from './database/models/event';
 
 const app = express();
@@ -10,102 +9,33 @@ const app = express();
 const filePath = path.resolve(__dirname, './build', 'index.html');
 
 app.get('/', function (req, res) {
-  const md = new MobileDetect(req.headers['user-agent']);
   res.setHeader('Content-Type', 'text/html');
-
-  if (md.mobile()) {
-    res.writeHead(302, {
-      Location: '/mobile'
-    });
-    res.end();
-    return;
-  }
 
   fs.readFile(filePath, 'utf8', function (err, data) {
     if (err) return console.log(err);
 
     const result = data
-      .replace(/\$OG_TITLE/g, 'GitJob.pl - Work for programmers')
-      .replace(/\$OG_DESCRIPTION/g, 'Job offers for IT professionals. Work for Javascript, PHP, Ruby on Rails, Java, C + or Database Administrators')
-      .replace(/\$OG_URL/g, 'https://gitjob.pl')
-      .replace(/\$OG_IMAGE/g, 'https://gitjob.pl/images/promo-v2.jpg');
+      .replace(/\$OG_TITLE/g, 'Todo.pl - simple react boilerplate')
+      .replace(/\$OG_DESCRIPTION/g, 'Description test')
+      .replace(/\$OG_URL/g, 'https://todo.pl')
+      .replace(/\$OG_IMAGE/g, 'https://todo.pl/images/x.jpg');
 
     res.send(result);
     return;
   });
 });
 
-app.get('/mobile', function (req, res) {
-  res.setHeader('Content-Type', 'text/html');
-
-  const md = new MobileDetect(req.headers['user-agent']);
-  if (!md.mobile()) {
-    res.writeHead(302, {
-      Location: '/'
-    });
-    res.end();
-    return;
-  }
-
-  fs.readFile(filePath, 'utf8', function (err, data) {
-    if (err) return console.log(err);
-
-    const result = data
-      .replace(/\$OG_TITLE/g, 'GitJob.pl - Work for programmers')
-      .replace(/\$OG_DESCRIPTION/g, 'Job offers for IT professionals. Work for Javascript, PHP, Ruby on Rails, Java, C + or Database Administrators')
-      .replace(/\$OG_URL/g, 'https://gitjob.pl/mobile')
-      .replace(/\$OG_IMAGE/g, 'https://gitjob.pl/images/promo-v2.jpg');
-
-    res.send(result);
-    return;
-  });
-});
-
-app.get('/login', function (req, res) {
+app.get('/add-todo', function (req, res) {
   res.setHeader('Content-Type', 'text/html');
 
   fs.readFile(filePath, 'utf8', function (err, data) {
     if (err) return console.log(err);
 
     const result = data
-      .replace(/\$OG_TITLE/g, 'Log In - GitJob.pl')
-      .replace(/\$OG_DESCRIPTION/g, 'Log in to the company panel')
-      .replace(/\$OG_URL/g, 'https://gitjob.pl/login')
-      .replace(/\$OG_IMAGE/g, 'https://gitjob.pl/images/promo-v2.jpg');
-
-    res.send(result);
-    return;
-  });
-});
-
-app.get('/register', function (req, res) {
-  res.setHeader('Content-Type', 'text/html');
-
-  fs.readFile(filePath, 'utf8', function (err, data) {
-    if (err) return console.log(err);
-
-    const result = data
-      .replace(/\$OG_TITLE/g, 'Register - GitJob.pl')
-      .replace(/\$OG_DESCRIPTION/g, 'Add new account')
-      .replace(/\$OG_URL/g, 'https://gitjob.pl/register')
-      .replace(/\$OG_IMAGE/g, 'https://gitjob.pl/images/promo-v2.jpg');
-
-    res.send(result);
-    return;
-  });
-});
-
-app.get('/add-offer', function (req, res) {
-  res.setHeader('Content-Type', 'text/html');
-
-  fs.readFile(filePath, 'utf8', function (err, data) {
-    if (err) return console.log(err);
-
-    const result = data
-      .replace(/\$OG_TITLE/g, 'Add new offer - GitJob.pl')
-      .replace(/\$OG_DESCRIPTION/g, 'Add a new job offer for a programmer on GitJob.pl')
-      .replace(/\$OG_URL/g, 'https://gitjob.pl/add-offer')
-      .replace(/\$OG_IMAGE/g, 'https://gitjob.pl/images/promo-v2.jpg');
+      .replace(/\$OG_TITLE/g, 'Add new Todo')
+      .replace(/\$OG_DESCRIPTION/g, 'Add new todo description')
+      .replace(/\$OG_URL/g, 'https://test.pl/add-todo')
+      .replace(/\$OG_IMAGE/g, 'https://test.pl/images/x.jpg');
 
     res.send(result);
     return;
@@ -145,8 +75,8 @@ app.get('/offer/:rewrite', function (req, res) {
   });
 });
 
-app.use('*/images', express.static('public/images'));
 app.use('*/robots.txt', express.static('public/robots.txt'));
+app.use('*/sitemap.xml', express.static('public/sitemap.xml'));
 app.use(express.static(path.resolve(__dirname, './build')));
 
 app.get('*', function (_, res) {

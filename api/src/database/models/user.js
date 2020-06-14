@@ -9,12 +9,9 @@ const userSchema = new Schema({
     required: true
   },
 
-  firstName: {
-    type: String
-  },
-
-  lastName: {
-    type: String
+  name: {
+    type: String,
+    required: true
   },
 
   email: {
@@ -27,69 +24,15 @@ const userSchema = new Schema({
     required: true
   },
 
-  phones: {
-    type: [Schema.Types.Mixed]
-  },
-
-  website: {
-    type: String
-  },
-
-  photo: {
-    type: String
-  },
-
   dateAdded: {
     type: Date,
     default: Date.now
   },
 
-  status: {
-    type: String,
-    required: true
-  },
-
-  role: {
-    type: String,
-    required: true
-  },
-
-  companyName: {
-    type: String
-  },
-
-  companyAddress: {
-    type: String
-  },
-
-  companyZip: {
-    type: String
-  },
-
-  companyNip: {
-    type: String
-  },
-
-  companyCountry: {
-    type: String
-  },
-
-  rodoAccept: {
-    type: Number,
-    required: true
-  },
-
-  events: [
+  todos: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Event'
-    }
-  ],
-
-  favoriteEvents: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Event'
+      ref: 'Todo'
     }
   ]
 });

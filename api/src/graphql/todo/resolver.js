@@ -10,32 +10,7 @@ import User from '../../database/models/user';
 
 exports.resolver = {
   Query: {
-    async event(_, { eventId }, { client }) {
-      try {
-        let result;
-        const redisResult = await getFromRedis(client, { eventId });
-
-        if (redisResult) {
-          result = JSON.parse(redisResult);
-        } else {
-          const event = await Event.findOne({ eventId });
-
-          if (event) {
-            result = transformEvent(event);
-
-            await addToRedis(client, { eventId }, result);
-          } else {
-            throw graphqlError(404, `Event with id ${eventId} does not exist.`);
-          }
-        }
-
-        return result;
-      } catch (err) {
-        throw graphqlError(500, `Something went wrong`);
-      }
-    },
-
-    async events(_, { filters, page, limit }, { client }) {
+    async todos(_, { filters, page, limit }, { client }) {
       try {
         let allEvents;
         // const redisResult = await getFromRedis(client, { userId });
@@ -73,7 +48,7 @@ exports.resolver = {
   },
 
   Mutation: {
-    async addEvent(_, { input }, { client }) {
+    async addTodo(_, { input }, { client }) {
       try {
         let userDocId = null;
         let userId = null;
@@ -129,7 +104,7 @@ exports.resolver = {
       }
     },
 
-    async deleteEvent(_, { eventId }, { req, client }) {
+    async deleteTodo(_, { eventId }, { req, client }) {
       const { isAuth, userId } = req;
 
       if (!isAuth || !userId) {
@@ -147,36 +122,6 @@ exports.resolver = {
         return {
           ...event._doc,
           _id: eventDocId
-        };
-      } catch {
-        throw graphqlError(500, `Something went wrong`);
-      }
-    },
-
-    async moderateEvent(_, { eventId }, { req, client }) {
-      const { isAuth, userId } = req;
-
-      if (!isAuth || !userId) {
-        throw graphqlError(403, `No permissions to access`);
-      }
-
-      try {
-        const event = await Event.findOneAndUpdate(
-          { eventId },
-          {
-            status: 'active'
-          },
-          { upsert: true, useFindAndModify: false },
-          (err) => {
-            if (err) throw graphqlError(500, err);
-          }
-        );
-
-        await removeFromRedis(client, [{ eventId }, { userId }]);
-
-        return {
-          ...event._doc,
-          _id: event.id
         };
       } catch {
         throw graphqlError(500, `Something went wrong`);
