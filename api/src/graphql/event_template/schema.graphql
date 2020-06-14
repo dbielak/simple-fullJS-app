@@ -1,0 +1,15 @@
+type EventTemplate {
+  _id: ID!
+  views: Float
+  redirects: Float
+  user: User
+}
+
+type Query {
+  eventTemplate(eventTemplateId: Int): EventTemplate
+}
+
+type Mutation {
+  addView(eventTemplateId: Int): EventTemplate
+  addRedirect(eventTemplateId: Int): EventTemplate
+}

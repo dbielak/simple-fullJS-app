@@ -1,0 +1,53 @@
+type User {
+  _id: ID!
+  userId: Float!
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String
+  phones: [String]
+  website: String
+  photo: String
+  dateAdded: String!
+  status: String!
+  role: String
+  veryfied: String
+  companyName: String
+  companyAddress: String
+  companyZip: String
+  companyNip: String
+  companyCountry: String
+  rodoAccept: String
+  events: [Event]
+  favoriteEvents: [Event]
+}
+
+input UserInput {
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+  phones: [String]
+  website: String
+  photo: String
+  status: String
+  role: String
+  companyName: String
+  companyAddress: String
+  companyZip: String
+  companyNip: String
+  companyCountry: String
+  rodoAccept: String
+}
+
+type Query {
+  user(userId: Int): User
+  users: [User]
+}
+
+type Mutation {
+  addUser(input: UserInput): User
+  updateUser(input: UserInput): User
+  addToFavorite(eventId: Float): Event
+  deleteUser: User
+}

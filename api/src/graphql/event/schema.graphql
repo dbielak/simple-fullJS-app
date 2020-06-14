@@ -1,0 +1,63 @@
+type Event {
+  _id: ID!
+  eventId: Float!
+  rewrite: String!
+  title: String!
+  description: String!
+  categoryCode: String!
+  categoryName: String!
+  agenda: String
+  eventDate: String!
+  eventTime: String!
+  organizatorName: String!
+  organizatorPhone: String!
+  organizatorEmail: String!
+  organizatorWebsite: String
+  eventAddress: String!
+  eventRegionCode: String!
+  eventRegionName: String!
+  dateAdded: String
+  price: Float
+  status: String
+  photo: String
+  eventTemplate: EventTemplate
+  user: User
+}
+
+input EventInput {
+  title: String!
+  description: String!
+  categoryCode: String!
+  categoryName: String!
+  agenda: String
+  eventDate: String!
+  eventTime: String!
+  organizatorName: String!
+  organizatorPhone: String!
+  organizatorEmail: String!
+  organizatorWebsite: String
+  eventAddress: String!
+  eventRegionCode: String!
+  eventRegionName: String!
+  price: Float
+  photo: String
+}
+
+type PaginatedEvents {
+  eventsList: [Event]
+  total: Float
+  page: Float
+  pages: Float
+}
+
+type Query {
+  event(eventId: Int): Event
+  events(filters: String, page: Int, limit: Int, sort: String): PaginatedEvents
+}
+
+type Mutation {
+  addEvent(input: EventInput): Event
+  updateEvent(input: EventInput): Event
+  deleteEvent(eventId: Int): Event
+  moderateEvent(eventId: Int): Event
+}

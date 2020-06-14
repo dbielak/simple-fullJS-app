@@ -1,0 +1,35 @@
+type Rating {
+  _id: ID!
+  ratingId: Float
+  firstName: String!
+  lastName: String!
+  authorEmail: String!
+  certificate: String!
+  rating: [Float]!
+  opinion: String!
+  status: String!
+  rodoAccept: String
+  dateAdded: String
+  user: User
+  eventTemplate: EventTemplate
+}
+
+input RatingInput {
+  firstName: String!
+  lastName: String!
+  authorEmail: String!
+  certificate: String!
+  rating: [Float]!
+  opinion: String!
+  status: String!
+  rodoAccept: String
+}
+
+type Query {
+  ratings(userId: Int): [Rating]
+}
+
+type Mutation {
+  addRating(input: RatingInput): Rating
+  moderateRating(ratingId: Float): Rating
+}

@@ -1,0 +1,17 @@
+{
+  "extends": "airbnb",
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+
+  "env": {
+    "es6": true
+  },
+
+  "rules": {
+    "func-names": ["error", "never"]
+  },
+
+  "plugins": ["syntax-dynamic-import"]
+}

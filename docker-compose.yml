@@ -1,0 +1,115 @@
+version: '3'
+
+services:
+  # MONGO DB
+  mongo:
+    image: bitnami/mongodb:latest
+    container_name: mongo
+    restart: unless-stopped
+    expose:
+      - $MONGODB_PORT
+    env_file: .env
+    environment:
+      - MONGODB_USERNAME=$MONGODB_USERNAME
+      - MONGODB_PASSWORD=$MONGODB_PASSWORD
+      - MONGODB_DATABASE=$MONGODB_DATABASE
+    volumes:
+      - ./docker/mongodb:/bitnami/mongodb
+    networks:
+      - app_network
+      - mongo_network
+
+  # MONGO DB GUI CLIENT
+  mongoclient:
+    image: mongoclient/mongoclient:latest
+    container_name: mongoclient
+    links:
+      - mongo
+    networks:
+      - mongo_network
+    ports:
+      - 3300:3000
+    environment:
+      - MONGOCLIENT_DEFAULT_CONNECTION_URL=mongodb://$MONGODB_DATABASE:$MONGODB_PASSWORD@mongo:$MONGODB_PORT/$MONGODB_DATABASE?ssl=false
+      - WAIT_HOSTS=mongo:$MONGODB_PORT
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
+
+  # REDIS
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: unless-stopped
+    expose:
+      - $REDIS_PORT
+    networks:
+      - app_network
+
+  # API
+  api:
+    build:
+      context: .
+      dockerfile: ./docker/api/Dockerfile
+    container_name: api
+    restart: unless-stopped
+    expose:
+      - $API_PORT
+    env_file: .env
+    environment:
+      - WAIT_HOSTS=mongo:$MONGODB_PORT
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
+    volumes:
+      - ./api/src:/app/src
+      - ./api/app.js:/app/app.js
+    networks:
+      - app_network
+
+  # CLIENT
+  client:
+    build:
+      context: .
+      dockerfile: ./docker/client/Dockerfile.development
+    container_name: client
+    restart: unless-stopped
+    expose:
+      - $CLIENT_PORT
+    env_file: .env
+    environment:
+      - API_URL=$API_URL
+      - WAIT_HOSTS=api:$API_PORT
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
+    volumes:
+      - ./client/src:/app/src
+      - ./client/public:/app/public
+      - ./client/database:/app/database
+    networks:
+      - app_network
+
+  # SERVER
+  server:
+    build:
+      context: .
+      dockerfile: ./docker/server/Dockerfile
+    container_name: server
+    restart: unless-stopped
+    expose:
+      - 80
+    ports:
+      - $SERVER_PORT:$SERVER_PORT
+      - $SSL_SERVER_PORT:$SSL_SERVER_PORT
+    env_file: .env
+    volumes:
+      - ./docker/server/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
+  mongo_network:
+    driver: bridge

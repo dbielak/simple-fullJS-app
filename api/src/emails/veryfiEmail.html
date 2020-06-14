@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style type="text/css" rel="stylesheet" media="all">
+      /* Base ------------------------------ */
+      *:not(br):not(tr):not(html) {
+        font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+      }
+      body {
+        width: 100% !important;
+        height: 100%;
+        margin: 0;
+        line-height: 1.4;
+        background-color: #f7f7f7;
+        color: #333;
+        -webkit-text-size-adjust: none;
+      }
+      a {
+        color: #3869d4;
+        text-decoration: none;
+      }
+
+      .logo img {
+        padding-right: 5px;
+      }
+      .logo {
+        overflow: hidden;
+        color: #137ba9;
+        display: inline-block;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      .down-info {
+        font-size: 12px;
+        color: #999;
+        margin: 0;
+      }
+
+      .notice-info {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px dashed #e1e1e1;
+        font-size: 12px;
+        color: #999;
+      }
+
+      .copyright {
+        padding: 10px;
+      }
+
+      .link {
+        margin: 20px 0 20px;
+        border-bottom: 1px solid #2196f3;
+        display: inline-block;
+        font-weight: bold;
+        font-size: 14px;
+        text-decoration: none;
+        color: #2196f3;
+      }
+
+      .email {
+        color: #333;
+      }
+
+      .title {
+        font-size: 14px;
+        font-weight: bold;
+        color: #999;
+      }
+
+      .line {
+        font-size: 12px;
+        margin-bottom: 0;
+      }
+
+      .line.bold {
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      /* Layout ------------------------------ */
+      .email-wrapper {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: #f2f4f6;
+      }
+      .email-content {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Masthead ----------------------- */
+      .email-masthead {
+        padding: 40px 0 20px;
+        text-align: center;
+      }
+
+      /* Body ------------------------------ */
+      .email-body {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .email-body_inner {
+        width: 570px;
+        background-color: #fff;
+        border-radius: 3px;
+        box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+        margin: 0 auto;
+        padding: 0;
+      }
+      .email-footer {
+        width: 570px;
+        margin: 0 auto;
+        padding: 0;
+      }
+      .email-footer p {
+        color: #aeaeae;
+        font-size: 10px;
+      }
+      .body-sub {
+        margin-top: 25px;
+        padding-top: 25px;
+        border-top: 1px solid #edeff2;
+      }
+      .content-cell {
+        text-align: left;
+        padding: 35px;
+      }
+      .content-min-cell {
+        padding: 0 10px;
+        text-align: left;
+      }
+
+      /* Type ------------------------------ */
+      h1 {
+        margin-top: 0;
+        color: #607d8b;
+        font-size: 19px;
+        font-weight: bold;
+      }
+
+      p {
+        margin-top: 0;
+        color: #74787e;
+        font-size: 16px;
+        line-height: 1.5em;
+      }
+      p.sub {
+        font-size: 10px;
+      }
+      p.center {
+        text-align: center;
+      }
+
+      /*Media Queries ------------------------------ */
+      @media only screen and (max-width: 600px) {
+        .email-body_inner,
+        .email-footer {
+          width: 100% !important;
+        }
+      }
+      @media only screen and (max-width: 500px) {
+        .button {
+          width: 100% !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <table class="email-wrapper" width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td align="center">
+          <table class="email-content" width="100%" cellpadding="0" cellspacing="0">
+            <!-- Logo -->
+            <tr>
+              <td class="email-masthead">
+                <a href="<%- product.link %>" target="_blank">
+                  <div class="logo">
+                    <img height="50" width="55" src="https://gitjob.pl/images/gitjob-logo.png" alt="logo" />
+                  </div>
+                </a>
+              </td>
+            </tr>
+            <!-- Email Body -->
+            <tr>
+              <td class="email-body" width="100%">
+                <table class="email-body_inner" align="center" width="570" cellpadding="0" cellspacing="0">
+                  <!-- Body content -->
+                  <tr>
+                    <td class="content-cell">
+                      <h1>Potwierdzenie adresu e-mail</h1>
+
+                      <div class="user-box">
+                        <p class="line">
+                          Kliknij w poniższy link aby aktywować konto w serwisie:
+                        </p>
+                        <p class="line bold">
+                          <a
+                            class="link"
+                            href="https://gitjob.pl/api/verify?email=<%- locals.data.email %>&secret=<%- locals.data.secret %>"
+                            title="Potwierdź swój adres e-mail"
+                            target="_blank"
+                            >Potwierdź swój adres e-mail</a
+                          >
+                        </p>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <table class="email-footer" align="center" width="570" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td class="copyright">
+                      <p class="sub">
+                        <%- product.copyright %>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="content-min-cell">
+                      <p class="sub">
+                        Nadawcą jest serwis gitjob.pl prowadzony przez firmę reApp.pl Dominik Bielak z siedzibą w Aleksandrowie Łódzkim Ruda Bugaj ul.
+                        Podleśna 22a NIP 7322134000 REGON 352001460
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
