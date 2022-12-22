@@ -28,7 +28,7 @@
     "graphql": "^14.1.1",
     "graphql-serverless": "^0.8.3",
     "graphql-tools": "^6.0.8",
-    "jsonwebtoken": "^8.5.0",
+    "jsonwebtoken": "^9.0.0",
     "md5": "^2.2.1",
     "mongoose": "^5.4.14",
     "mongoose-paginate": "^5.0.3",
